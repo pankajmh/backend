@@ -6,16 +6,13 @@ dotenv.config({
   path: "./env",
 });
 
-connectDB();
-
-// import { DB_NAME } from "./constants";
-
-// //IIFE immediately invoked function expressions
-// (async () => {
-//   try {
-//     await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`);
-//   } catch (err) {
-//     console.log("Error: ", err);
-//     throw err;
-//   }
-// })();
+//connectDB returns Promise as it async function
+connectDB()
+  .then(() => {
+    app.listen(process.env.PORT || 8000, () => {
+      console.log(`Server is running at port: ${process.env.PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log("MongGo db connection failed!!!", error);
+  });
